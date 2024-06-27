@@ -9,11 +9,11 @@ This project demonstrates a simple Solidity smart contract with a frontend for i
 
 - **`frontend/`** - Contains the frontend code (HTML and JavaScript).
   - `index.html`: The HTML file for the frontend.
-  - `script.js`: The JavaScript file for interacting with the smart contract using ethers.js.
+  - `app.js`: The JavaScript file for interacting with the smart contract using ethers.js.
 
 ## Features
 
-- **Increment Counter**: Increases a counter by a specified amount each time the function is called.
+- **Increment Counter**: Increases a counter by a one each time the function is called.
 - **Set Value**: Allows setting a new integer value in the contract.
 - **Get Value**: Retrieves and displays the current integer value stored in the contract.
 
@@ -46,7 +46,7 @@ This project demonstrates a simple Solidity smart contract with a frontend for i
 3. Now you can just open the live server
 
 ## Solidity Smart Contract (`SimpleContract.sol`)
-'''Solidity
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -73,5 +73,6 @@ contract SimpleContract {
         value = _value;
     }
 }
-'''
-## Frontend (`index.html`)
+```
+## LICENSE
+This project is licensed under the MIT License - see the LICENSE.md file for details

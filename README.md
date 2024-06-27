@@ -53,22 +53,18 @@ pragma solidity ^0.8.0;
 contract SimpleContract {
     uint256 private value;
 
-    // Constructor to initialize value
     constructor() {
         value = 0;
     }
 
-    // Function to get the current value
     function getValue() public view returns (uint256) {
         return value;
     }
 
-    // Function to increment the value
     function incrementValue() public {
         value += 1;
     }
 
-    // Function to set a new value
     function setValue(uint256 _value) public {
         value = _value;
     }

@@ -1,84 +1,85 @@
-const contractAddress = "YOUR_CONTRACT_ADDRESS"; // Replace with your deployed contract address
-const contractABI = [
+// Replace this with your deployed contract address
+const contractAddress = "0x4955FFf0Dde4Aa9FDF6D9Af1551fE4c0887f52D0";
+
+// ABI of the contract(Replace it with your contract ABI)
+const abi = [
     {
-        "constant": true,
         "inputs": [],
-        "name": "count",
-        "outputs": [{"name": "", "type": "uint256"}],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "storedString",
-        "outputs": [{"name": "", "type": "string"}],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [],
-        "name": "incrementCount",
+        "name": "incrementValue",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
-        "inputs": [{"name": "newString", "type": "string"}],
-        "name": "setString",
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_value",
+                "type": "uint256"
+            }
+        ],
+        "name": "setValue",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "getValue",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     }
 ];
 
-let web3;
-let simpleContract;
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
+const contract = new ethers.Contract(contractAddress, abi, signer);
 
-async function init() {
-    // Modern dapp browsers
-    if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
+async function getValue() {
+    try {
+        const value = await contract.getValue();
+        document.getElementById("value").innerText = value.toString();
+    } catch (error) {
+        console.error("Error getting value:", error);
     }
-    // Legacy dapp browsers
-    else if (window.web3) {
-        web3 = new Web3(window.web3.currentProvider);
+}
+
+async function incrementValue() {
+    try {
+        const tx = await contract.incrementValue();
+        await tx.wait();
+        getValue(); 
+    } catch (error) {
+        console.error("Error incrementing value:", error);
     }
-    // Non-dapp browsers
-    else {
-        alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+}
+
+async function setValue() {
+    const newValue = document.getElementById("newValue").value;
+    if (newValue === "") {
+        alert("Please enter a value");
+        return;
     }
 
-    simpleContract = new web3.eth.Contract(contractABI, contractAddress);
-    updateUI();
+    try {
+        const tx = await contract.setValue(newValue);
+        await tx.wait();
+        getValue(); e
+    } catch (error) {
+        console.error("Error setting value:", error);
+    }
 }
 
-async function updateUI() {
-    const count = await simpleContract.methods.count().call();
-    document.getElementById("count").innerText = count;
-
-    const storedString = await simpleContract.methods.storedString().call();
-    document.getElementById("storedString").innerText = storedString;
-}
-
-async function incrementCount() {
-    const accounts = await web3.eth.getAccounts();
-    await simpleContract.methods.incrementCount().send({ from: accounts[0] });
-    updateUI();
-}
-
-async function setString() {
-    const newString = document.getElementById("newString").value;
-    const accounts = await web3.eth.getAccounts();
-    await simpleContract.methods.setString(newString).send({ from: accounts[0] });
-    updateUI();
-}
-
-window.onload = init;
+window.ethereum.enable().catch(console.error);

@@ -9,12 +9,13 @@ This project demonstrates a simple Solidity smart contract with a frontend for i
 
 - **`frontend/`** - Contains the frontend code (HTML and JavaScript).
   - `index.html`: The HTML file for the frontend.
-  - `app.js`: The JavaScript file for interacting with the smart contract using Web3.js.
+  - `script.js`: The JavaScript file for interacting with the smart contract using ethers.js.
 
 ## Features
 
-- **Increment Counter**: Increases a counter by 1 each time the function is called.
-- **Set String**: Allows setting a new string value to be stored in the contract.
+- **Increment Counter**: Increases a counter by a specified amount each time the function is called.
+- **Set Value**: Allows setting a new integer value in the contract.
+- **Get Value**: Retrieves and displays the current integer value stored in the contract.
 
 ## Getting Started
 
@@ -27,15 +28,50 @@ This project demonstrates a simple Solidity smart contract with a frontend for i
 
 1. **Compile and Deploy the Contract**:
 
-   Use [Remix](https://remix.ethereum.org/) or Truffle to compile and deploy the `SimpleContract.sol` on your desired network (e.g., Ethereum testnet).
+   Use Remix, Hardhat, or Truffle to compile and deploy the `SimpleContract.sol` on your desired Ethereum network (e.g., Rinkeby, Ropsten).
 
-2. **Obtain Contract Address**:
+2. **Obtain Contract Address and ABI**:
 
-   After deployment, copy the deployed contract address. This will be used in the frontend configuration.
+   After deployment, obtain the deployed contract address and ABI (Application Binary Interface). The ABI defines how to interact with the smart contract from your frontend.
 
 ### Frontend Setup
 
-1. **Clone the Repository**:
+1. **Open VSCode or Any Other IDE**:
+   Ensure you have an integrated development environment (IDE) like VSCode installed on your machine for editing frontend files.
+
+2. **Clone the Repository**:
    ```bash
    git clone https://github.com/YOUR_USERNAME/function-frontend.git
    cd function-frontend
+3. Now you can just open the live server
+
+## Solidity Smart Contract (`SimpleContract.sol`)
+'''Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleContract {
+    uint256 private value;
+
+    // Constructor to initialize value
+    constructor() {
+        value = 0;
+    }
+
+    // Function to get the current value
+    function getValue() public view returns (uint256) {
+        return value;
+    }
+
+    // Function to increment the value
+    function incrementValue() public {
+        value += 1;
+    }
+
+    // Function to set a new value
+    function setValue(uint256 _value) public {
+        value = _value;
+    }
+}
+'''
+## Frontend (`index.html`)

@@ -2,21 +2,21 @@
 pragma solidity ^0.8.0;
 
 contract SimpleContract {
-    uint256 public count;
-    string public storedString;
+    uint256 private value;
 
     constructor() {
-        count = 0;
-        storedString = "Hello, World!";
+        value = 0;
     }
 
-    // Increment the counter
-    function incrementCount() public {
-        count += 1;
+    function getValue() public view returns (uint256) {
+        return value;
     }
 
-    // Set a new string
-    function setString(string memory newString) public {
-        storedString = newString;
+    function incrementValue() public {
+        value += 1;
+    }
+
+    function setValue(uint256 _value) public {
+        value = _value;
     }
 }

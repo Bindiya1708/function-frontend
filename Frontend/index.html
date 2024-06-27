@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Contract Interaction</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.4/dist/web3.min.js"></script>
-    <script defer src="app.js"></script>
+    <title>SimpleContract Frontend</title>
 </head>
 <body>
-    <h1>Simple Contract Interaction</h1>
+    <h2>SimpleContract Interaction</h2>
     <div>
-        <h2>Counter</h2>
-        <p id="count"></p>
-        <button onclick="incrementCount()">Increment Count</button>
+        <label>Current Value: </label><span id="value">-</span>
     </div>
+    <button onclick="getValue()">Get Value</button>
+    <button onclick="incrementValue()">Increment Value</button>
     <div>
-        <h2>Stored String</h2>
-        <p id="storedString"></p>
-        <input type="text" id="newString" placeholder="Enter new string" />
-        <button onclick="setString()">Set String</button>
+        <input type="number" id="newValue" placeholder="Enter new value">
+        <button onclick="setValue()">Set Value</button>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
